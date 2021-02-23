@@ -1,0 +1,15 @@
+{
+  "name": "serialwebsocketjs",
+  "version": "1.0.0",
+  "description": "A simple serial to websocket bridge",
+  "main": "serialwebsocket.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DR",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^9.0.7",
+    "ws": "^7.4.3"
+  }
+}
