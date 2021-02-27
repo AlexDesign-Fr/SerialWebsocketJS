@@ -39,7 +39,8 @@ port.on('error', function(err) {
 
 // Handle disconnect
 port.on('close', function(err) {
-  console.log('Connection Closed: ', err.message)
+  sendWS('Serial Port disconnected.');
+  sendWS('Trying to open Serial Port ...');
   setTimeout(openSerial, serial_retry);
 })
 
@@ -54,6 +55,9 @@ wss.on('connection', function connection(ws) {
   });
 
   ws.send('Connected');
+  if (!port.isOpen) {
+    ws.send('Trying to open Serial Port ...');
+  }
 });
 
 // try to connect to serial
