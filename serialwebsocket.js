@@ -4,12 +4,11 @@ const SerialPort = require('serialport')
 const wss = new WebSocket.Server({ port: 1024 });
 const port = new SerialPort('/dev/ttyACM0', {baudRate: 115200});
 
-const prnt_dbg = true;
+const serial_retry = 5000; // retry interval for serial connection in milliseconds
 
 // TODO:
 // 1. Make configurable
 // 2. define decode function
-// 3. Handle reconnect/connect during runtime
 
 // foreward WS event -> Serial Port
 // TODO: decode special commands
@@ -35,6 +34,13 @@ port.on('readable', function () {
 // Open errors will be emitted as an error event
 port.on('error', function(err) {
   console.log('Error: ', err.message)
+  setTimeout(openSerial, serial_retry);
+})
+
+// Handle disconnect
+port.on('close', function(err) {
+  console.log('Connection Closed: ', err.message)
+  setTimeout(openSerial, serial_retry);
 })
 
 // handle WS connection
@@ -49,3 +55,16 @@ wss.on('connection', function connection(ws) {
 
   ws.send('Connected');
 });
+
+// try to connect to serial
+function openSerial(){
+  if (port.isOpen) {
+    return;
+  }  
+  port.open(function (err) {
+    if (err) {
+      console.log('Error opening port: ', err.message)
+      setTimeout(openSerial, serial_retry);
+    }
+  });
+}
