@@ -6,10 +6,6 @@ const port = new SerialPort('/dev/ttyACM0', {baudRate: 115200});
 
 const serial_retry = 5000; // retry interval for serial connection in milliseconds
 
-// TODO:
-// 1. Make configurable
-// 2. define decode function
-
 // foreward WS event -> Serial Port
 // TODO: decode special commands
 function sendSerial(message) {
@@ -33,7 +29,8 @@ port.on('readable', function () {
 
 // Open errors will be emitted as an error event
 port.on('error', function(err) {
-  console.log('Error: ', err.message)
+  //console.log('Error: ', err.message)
+  sendWS('Laser powered off or disconnected');
   setTimeout(openSerial, serial_retry);
 })
 
@@ -50,9 +47,10 @@ wss.on('connection', function connection(ws) {
     sendSerial(message);
   });
   
-  ws.on('error', function(e){
-    console.log(`Received Error: ${e}`);
-  });
+  //ws connection errors are ignored (cannot be resolved anyway)
+  //ws.on('error', function(e){
+    //console.log(`Received Error: ${e}`);
+  //});
 
   ws.send('Connected');
   if (!port.isOpen) {
@@ -67,7 +65,8 @@ function openSerial(){
   }  
   port.open(function (err) {
     if (err) {
-      console.log('Error opening port: ', err.message)
+      //console.log('Error opening port: ', err.message)      
+      sendWS('Laser powered off or disconnected');
       setTimeout(openSerial, serial_retry);
     }
   });

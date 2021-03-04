@@ -1,5 +1,9 @@
 # SerialWebsocketJS
 ## A transparent node.js: Websocket <-> Serial Port Bridge
+## For Usage with LaserGRBL
+
+## Reference
+https://lasergrbl.com/usage/wifi-with-esp8266/
 
 ## Install
 ### Install latest Node.js
