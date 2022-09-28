@@ -10,7 +10,8 @@
   "author": "DR",
   "license": "ISC",
   "dependencies": {
+    "python-shell": "^3.0.1",
     "serialport": "^9.0.7",
-    "ws": "^7.4.3"
+    "ws": "^7.5.9"
   }
 }

@@ -6,10 +6,31 @@ const port = new SerialPort('/dev/ttyACM0', {baudRate: 115200});
 
 const serial_retry = 5000; // retry interval for serial connection in milliseconds
 
+// Alex : (28/09/2022) decode special commande and execute python script
+const {PythonShell} =require('python-shell');
+let optionsForPython = {
+	mode: 'text',
+	pythonOptions: ['-u'], // get print results in real-time
+	//scriptPath: '/home/pi/ortur', //If you have python_test.py script in same folder, then it's optional.
+	args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1]
+};
+
 // foreward WS event -> Serial Port
-// TODO: decode special commands
 function sendSerial(message) {
+  if( message.trim() == "M8") {
+     PythonShell.run('ventilateur_ON.py',optionsForPython , function(err,result){
+	  if (err) throw err;
+          //console.log('result: ', result.toString());
+    })
+  }
+  if( message.trim() == "M9") {
+     PythonShell.run('ventilateur_OFF.py',optionsForPython , function(err,result){
+	  if (err) throw err;
+          //console.log('result: ', result.toString());
+    })
+  }
   port.write(message);
+  
 }
 
 // broadcast Serial Port -> all WS clients
