@@ -1,4 +1,7 @@
-You can use your LaserGRBL to send G-code comman to a Wifi websocket.
+You can use your LaserGRBL to send G-code command to a Wifi websocket.
+
+This can be usefull if you don't want your Laser Cutter to be in the same room than your computer. 
+As LaserGrbl is not so user friendly with Linux (or Raspbian) on a Raspberry PI, you can use your Raspberry Pi as a remote access from LaserGrbl.
 
 # SerialWebsocketJS
 ## A transparent node.js: Websocket <-> Serial Port Bridge
