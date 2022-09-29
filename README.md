@@ -1,6 +1,14 @@
+You can use your LaserGRBL to send G-code comman to a Wifi websocket.
+
 # SerialWebsocketJS
 ## A transparent node.js: Websocket <-> Serial Port Bridge
 ## For Usage with LaserGRBL
+
+This program send G-code to serial USB. It analys message from LaserGRBL and can execute Python script when G-Code instructions are send from LaserGRBL. 
+
+Actually :
+- M8 -> will launch python code fan_ON.py (to turn fan ON )
+- M9 -> will launch python code fan_OFF.py (to turn fan OFF )
 
 ## Reference
 https://lasergrbl.com/usage/wifi-with-esp8266/
